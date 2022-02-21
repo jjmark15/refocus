@@ -1,3 +1,5 @@
+use refocus::App;
+
 fn main() {
-    println!("Hello, world!");
+    App::run()
 }
