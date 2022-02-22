@@ -28,6 +28,7 @@ impl App {
 
 #[derive(Debug, Parser)]
 struct Opts {
+    #[clap(last = true)]
     expression: Vec<String>,
 }
 
