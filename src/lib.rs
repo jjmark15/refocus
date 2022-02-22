@@ -9,7 +9,7 @@ impl App {
     pub fn run() {
         let opts: Opts = Opts::parse();
 
-        let command_string = opts.expression.join(" ");
+        let command_string = opts.command.join(" ");
 
         if execute(command_string.as_str()).as_secs() > opts.duration {
             let mut notification = Notification::new();
@@ -28,13 +28,13 @@ impl App {
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Opts {
-    // Duration (in seconds) after which a notification is triggered upon command completion
+    /// Duration (in seconds) after which a notification is triggered upon command completion
     #[clap(short, long, default_value_t = 60)]
     duration: u64,
 
-    // Command to be executed
+    /// Command to be executed
     #[clap(last = true)]
-    expression: Vec<String>,
+    command: Vec<String>,
 }
 
 fn execute(command: &str) -> Duration {
