@@ -11,14 +11,11 @@ impl App {
 
         let command_string = opts.expression.join(" ");
 
-        let duration = execute(command_string.as_str());
-
-        if duration.as_secs() > opts.duration {
+        if execute(command_string.as_str()).as_secs() > opts.duration {
             let mut notification = Notification::new();
             notification
                 .summary("Command finished")
                 .body(command_string.as_str())
-                .icon("utilities-terminal")
                 .sound_name(SOUND)
                 .timeout(Timeout::Milliseconds(2000));
 
