@@ -1,5 +1,6 @@
 use clap::Parser;
 use notify_rust::{Notification, Timeout};
+use std::ops::Mul;
 
 use execute::execute;
 
@@ -16,13 +17,13 @@ impl App {
 
         let command = opts.command;
 
-        if execute(&command).as_secs() > opts.duration {
+        if execute(&command).as_secs() > opts.timeout_period {
             let mut notification = Notification::new();
             notification
                 .summary("Command finished")
                 .body(command.join(" ").as_str())
                 .sound_name(SOUND)
-                .timeout(Timeout::Milliseconds(2000));
+                .timeout(Timeout::Milliseconds(opts.display_period.mul(1000) as u32));
 
             notification.show().unwrap();
         }

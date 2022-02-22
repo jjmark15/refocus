@@ -5,5 +5,5 @@ A simple application that raises a notification when a command finished executin
 ## Usage
 
 ```shell
-refocus -d 10 -- sleep 11
+refocus -t 10 -- sleep 11
 ```
