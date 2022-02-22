@@ -19,6 +19,7 @@ impl App {
                 .summary("Command finished")
                 .body(command_string.as_str())
                 .icon("utilities-terminal")
+                .sound_name(SOUND)
                 .timeout(Timeout::Milliseconds(2000));
 
             notification.show().unwrap();
@@ -53,3 +54,12 @@ fn execute(command: &str) -> Duration {
     spawn_result.and_then(|mut child| child.wait()).unwrap();
     Instant::now().duration_since(before)
 }
+
+#[cfg(target_os = "macos")]
+static SOUND: &'static str = "Ping";
+
+#[cfg(all(unix, not(target_os = "macos")))]
+static SOUND: &str = "message-new-instant";
+
+#[cfg(target_os = "windows")]
+static SOUND: &'static str = "Mail";
