@@ -13,7 +13,7 @@ impl App {
 
         let duration = execute(command_string.as_str());
 
-        if duration.as_secs() > 3 {
+        if duration.as_secs() > opts.duration {
             let mut notification = Notification::new();
             notification
                 .summary("Command finished")
@@ -26,8 +26,15 @@ impl App {
     }
 }
 
-#[derive(Debug, Parser)]
+/// Notify when a long-running command has finished
+#[derive(Parser, Debug)]
+#[clap(author, version, about, long_about = None)]
 struct Opts {
+    // Duration (in seconds) after which a notification is triggered upon command completion
+    #[clap(short, long, default_value_t = 60)]
+    duration: u64,
+
+    // Command to be executed
     #[clap(last = true)]
     expression: Vec<String>,
 }
