@@ -12,6 +12,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.55"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "159bb86af3a200e19a068f4224eae4c8bb2d0fa054c7e5d1cacd5cef95e684cd"
+
+[[package]]
 name = "arrayref"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -258,6 +264,17 @@ name = "derivative"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fcc3dd5e9e9c0b295d6e1e4d811fb6f157d5ffd784b8d202fc62eac8035a770b"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "derive-getters"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c5905670fd9c320154f3a4a01c9e609733cd7b753f3c58777ab7d5ce26686b3"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -744,7 +761,9 @@ dependencies = [
 name = "refocus"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "clap",
+ "derive-getters",
  "notify-rust",
 ]
 

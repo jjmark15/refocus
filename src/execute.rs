@@ -1,18 +1,16 @@
-use std::process::Command;
+use anyhow::Context;
 use std::time::{Duration, Instant};
 
-pub(crate) fn execute(command: &[String]) -> Duration {
-    let command_base = command.first().unwrap();
-    let args: Vec<String> = command
-        .iter()
-        .enumerate()
-        .filter_map(|(index, arg)| if index > 0 { Some(arg) } else { None })
-        .cloned()
-        .collect();
+use crate::command::Command;
 
+pub(crate) fn execute(command: &Command) -> anyhow::Result<Duration> {
     let before = Instant::now();
-    let spawn_result = Command::new(command_base).args(args).spawn();
+    let spawn_result = std::process::Command::new(command.executable())
+        .args(command.args())
+        .spawn();
 
-    spawn_result.and_then(|mut child| child.wait()).unwrap();
-    Instant::now().duration_since(before)
+    spawn_result
+        .and_then(|mut child| child.wait())
+        .context(format!("Could not execute '{}'", command))?;
+    Ok(Instant::now().duration_since(before))
 }

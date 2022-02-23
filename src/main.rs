@@ -1,5 +1,5 @@
 use refocus::App;
 
-fn main() {
+fn main() -> anyhow::Result<()> {
     App::run()
 }
