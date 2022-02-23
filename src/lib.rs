@@ -19,6 +19,10 @@ impl App {
     pub fn run() -> Result<()> {
         let opts: Opts = Opts::parse();
 
+        if opts.command.is_empty() {
+            return Ok(());
+        }
+
         let command = Command::try_from(opts.command)?;
 
         if execute(&command)?.as_secs() > opts.timeout_period {
