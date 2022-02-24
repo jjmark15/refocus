@@ -5,7 +5,7 @@ use clap::Parser;
 #[clap(author, version, about, long_about = None)]
 pub(crate) struct Opts {
     /// Period (in seconds) after which a notification is triggered upon command completion
-    #[clap(short, long, default_value_t = 60)]
+    #[clap(short, long, default_value_t = 0)]
     pub(crate) timeout_period: u64,
 
     /// Command to be executed
