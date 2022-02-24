@@ -1,5 +1,3 @@
-use std::ops::Mul;
-
 use anyhow::{Context, Result};
 use clap::Parser;
 use notify_rust::{Notification, Timeout};
@@ -27,16 +25,15 @@ impl App {
 
         let execution_time = execute(&command)?.as_secs();
 
-        if execution_time > opts.timeout_period {
-            let mut notification = Notification::new();
-            notification
-                .summary(format!("Command finished in {} seconds", execution_time).as_str())
-                .body(command.to_string().as_str())
-                .sound_name(SOUND)
-                .timeout(Timeout::Milliseconds(opts.display_period.mul(1000) as u32));
+        let mut notification = Notification::new();
 
-            notification.show().context("Failed to show notification")?;
-        }
+        notification
+            .summary(format!("Command finished in {} seconds", execution_time).as_str())
+            .body(command.to_string().as_str())
+            .sound_name(SOUND)
+            .timeout(Timeout::Milliseconds(3000));
+
+        notification.show().context("Failed to show notification")?;
 
         Ok(())
     }
