@@ -25,10 +25,12 @@ impl App {
 
         let command = Command::try_from(opts.command)?;
 
-        if execute(&command)?.as_secs() > opts.timeout_period {
+        let execution_time = execute(&command)?.as_secs();
+
+        if execution_time > opts.timeout_period {
             let mut notification = Notification::new();
             notification
-                .summary("Command finished")
+                .summary(format!("Command finished in {} seconds", execution_time).as_str())
                 .body(command.to_string().as_str())
                 .sound_name(SOUND)
                 .timeout(Timeout::Milliseconds(opts.display_period.mul(1000) as u32));
