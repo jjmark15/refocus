@@ -28,9 +28,10 @@ impl TryFrom<Vec<String>> for Command {
 
 impl Display for Command {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let mut command_string = vec![self.executable.clone()];
-        command_string.extend(self.args.iter().cloned());
-
-        write!(f, "{}", command_string.join(" "))
+        if !self.args.is_empty() {
+            write!(f, "{} {}", self.executable, self.args.join(" "))
+        } else {
+            write!(f, "{}", self.executable)
+        }
     }
 }
